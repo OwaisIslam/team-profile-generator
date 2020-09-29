@@ -8,10 +8,11 @@ header {
     padding: 30px;
 }
 
-.manager {
+.manager,
+.team {
     display: flex;
     justify-content: center;
-    margin-top: 5px;
+    margin-top: 50px;
 }
 
 #manager-name {
@@ -20,4 +21,8 @@ header {
 
 #manager-role {
     font-size: 22px;
+}
+
+.employee {
+    margin: 20px;
 }
