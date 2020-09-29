@@ -15,11 +15,13 @@ header {
     margin-top: 50px;
 }
 
-#manager-name {
+#manager-name,
+#employee-name {
     font-size: 28px;
 }
 
-#manager-role {
+#manager-role,
+#employee-role {
     font-size: 22px;
 }
 
