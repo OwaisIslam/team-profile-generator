@@ -7,3 +7,17 @@ header {
     justify-content: center;
     padding: 30px;
 }
+
+.manager {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+#manager-name {
+    font-size: 28px;
+}
+
+#manager-role {
+    font-size: 22px;
+}
