@@ -184,26 +184,56 @@ const internQuestions = [{
 
 const promptUser = () => {
     return inquirer.prompt(managerQuestions)
-        .then(managerData => {
-            if (managerData.action == 'Add an engineer') {
-                return (inquirer.prompt(engineerQuestions));
-            } else if (managerData.action == 'Add an intern') {
-                return (inquirer.prompt(internQuestions));
-            }
-        });
 }
 
-const promptTeam = teamData => {
-    if (!teamData.team) {
-        teamData.team = [];
-    }
+const promptEngineer = teamData => {
+    // if (!teamData.team) {
+    //     teamData.team = [];
+    // }
 
-    // return inquirer.prompt(teamQuestions);
+    return inquirer.prompt(engineerQuestions);
 }
+
+const promptIntern = teamData => {
+    // if (!teamData.team) {
+    //     teamData.team = [];
+    // }
+
+    return inquirer.prompt(internQuestions);
+}
+
+const endProgram = teamData => {
+    return;
+}
+
+// const promptTeam = teamData => {
+//     if (!teamData.team) {
+//         teamData.team = [];
+//     }
+
+//     return inquirer.prompt(teamQuestions);
+// }
 
 function start() {
     promptUser()
-        .then(promptTeam);
+        .then(managerData => {
+            if (managerData.action == 'Add an engineer') {
+                return promptEngineer();
+            } else if (managerData.action == 'Add an intern') {
+                return promptIntern();
+            } else {
+                return endProgram();
+            }
+        })
+        .then(teamData => {
+            if (teamData.action == 'Add an engineer') {
+                return promptEngineer();
+            } else if (teamData.action == 'Add an intern') {
+                return promptIntern();
+            } else {
+                return endProgram();
+            }
+        })
 }
 
 start();
