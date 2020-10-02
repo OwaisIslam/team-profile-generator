@@ -185,23 +185,32 @@ const internQuestions = [{
     }
 ]
 
+const checkAction = choice => {
+    if (choice.action === 'Add an engineer') {
+        return promptEngineer();
+    } else if (choice.action === 'Add an intern') {
+        return promptIntern();
+    } else {
+        return;
+    }
+}
+
 const promptUser = () => {
     return inquirer.prompt(managerQuestions);
 }
 
-const promptEngineer = teamData => {
+const promptEngineer = () => {
     // if (!teamData.team) {
     //     teamData.team = [];
     // }
-
+    // console.log("team data" + teamData);
     return inquirer.prompt(engineerQuestions)
-        .then(teamData => {
-            console.log("team data" + teamData);
-            checkAction(teamData);
+        .then(engineerData => {
+            checkAction(engineerData);
         })
 }
 
-const promptIntern = teamData => {
+const promptIntern = () => {
     // if (!teamData.team) {
     //     teamData.team = [];
     // }
@@ -213,15 +222,6 @@ const endProgram = teamData => {
     return;
 }
 
-const checkAction = choice => {
-    if (choice.action === 'Add an engineer') {
-        return promptEngineer();
-    } else if (choice.action === 'Add an intern') {
-        return promptIntern();
-    } else {
-        return teamData;
-    }
-}
 
 function start() {
     promptUser()
@@ -230,7 +230,7 @@ function start() {
                 ...managerData
             };
             if (managerData.action === 'Add an engineer') {
-                return promptEngineer();
+                return promptEngineer()
             } else if (managerData.action === 'Add an intern') {
                 return promptIntern();
             } else {
@@ -248,6 +248,9 @@ function start() {
             // } else {
             //     return teamData;
             // }
+        })
+        .catch(err => {
+            console.log("");
         })
 }
 
