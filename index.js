@@ -3,7 +3,9 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 
 var manager = [];
-var team = [];
+var engineers = [];
+var interns = [];
+var firstChoice;
 
 const managerQuestions = [{
         type: 'input',
@@ -187,7 +189,8 @@ const internQuestions = [{
 
 const checkAction = choice => {
     if (choice.action === 'Add an engineer') {
-        return promptEngineer();
+        return promptEngineer()
+            .then(console.log("hello2"))
     } else if (choice.action === 'Add an intern') {
         return promptIntern();
     } else {
@@ -200,26 +203,26 @@ const promptUser = () => {
 }
 
 const promptEngineer = () => {
-    // if (!teamData.team) {
-    //     teamData.team = [];
-    // }
-    // console.log("team data" + teamData);
     return inquirer.prompt(engineerQuestions)
         .then(engineerData => {
+            engineers.push(engineerData);
             checkAction(engineerData);
         })
 }
 
 const promptIntern = () => {
-    // if (!teamData.team) {
-    //     teamData.team = [];
-    // }
-
-    return inquirer.prompt(internQuestions);
+    return inquirer.prompt(internQuestions)
+        .then(internData => {
+            interns.push(internData);
+            checkAction(internData);
+        })
 }
 
-const endProgram = teamData => {
-    return;
+const endProgram = () => {
+    console.log("Manager Data: " + manager);
+    console.log("Engineer Data: " + engineers);
+    console.log("Intern Data: " + interns);
+    // return;
 }
 
 
@@ -230,27 +233,48 @@ function start() {
                 ...managerData
             };
             if (managerData.action === 'Add an engineer') {
+                firstChoice = 'engineer';
                 return promptEngineer()
             } else if (managerData.action === 'Add an intern') {
+                firstChoice = 'intern';
                 return promptIntern();
             } else {
+                console.log("ending program");
                 return endProgram();
             }
         })
         .then(teamData => {
-            checkAction(teamData);
-            // team.push(teamData);
-            // console.log(team);
-            // if (teamData.action === 'Add an engineer') {
-            //     return promptEngineer();
-            // } else if (teamData.action === 'Add an intern') {
-            //     return promptIntern();
+            console.log("IN 2ND THEN UNDER PROMPTUSER");
+
+            if (firstChoice == 'engineer') {
+                if (engineers[0].action === 'Add an engineer') {
+                    console.log("selected engineer!");
+                } else if (engineers[0].action === 'Add an intern') {
+                    console.log('selected intern');
+                }
+            } else {
+                if (interns[0].action === 'Add an engineer') {
+                    console.log("selected engineer!");
+                } else if (interns[0].action === 'Add an intern') {
+                    console.log('selected intern');
+                }
+            }
+
+
+
+
+            // if ((engineers[0].action === 'Add an engineer') || (interns[0].action === 'Add an engineer')) {
+            //     console.log("selected engineer!");
+            // } else if ((engineers[0].action === 'Add an intern') || (interns[0].action === 'Add an intern')) {
+            //     console.log("selected intern!");
             // } else {
-            //     return teamData;
+            //     console.log("other");
             // }
+            endProgram();
+            // checkAction(teamData);
         })
         .catch(err => {
-            console.log("");
+            console.log(err);
         })
 }
 
